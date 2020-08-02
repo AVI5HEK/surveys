@@ -1,0 +1,126 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+  compileSdkVersion 29
+  buildToolsVersion "30.0.1"
+
+  defaultConfig {
+    applicationId "com.avi5hek.surveys"
+    minSdkVersion 21
+    targetSdkVersion 29
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    debug {
+      applicationIdSuffix ".debug"
+      minifyEnabled false
+      shrinkResources false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+      resValue "string", "app_name", "@string/app_name_debug"
+      buildConfigField "String", "BASE_URL", '"https://nimble-survey-api.herokuapp.com/"'
+    }
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+      resValue "string", "app_name", "@string/app_name_release"
+      buildConfigField "String", "BASE_URL", '"https://nimble-survey-api.herokuapp.com/"'
+    }
+  }
+
+  androidExtensions {
+    experimental = true
+  }
+
+  buildFeatures {
+    dataBinding true
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: "libs", include: ["*.jar"])
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Core
+  implementation "androidx.core:core-ktx:$core_version"
+
+  // Preference
+  implementation "androidx.preference:preference:$preference_version"
+  implementation "androidx.preference:preference-ktx:$preference_version"
+
+  // ConstraintLayout
+  implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+
+  // AppCompat
+  implementation "androidx.appcompat:appcompat:$app_compat_version"
+
+  // Lifecycle
+  implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+  kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+  // Dagger HILT
+  implementation "com.google.dagger:hilt-android:$hilt_version"
+  kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+  // Rx
+  implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
+  implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+  implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
+
+  // OkHttp
+  implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+  implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+  // Retrofit
+  implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+  implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+  implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+  implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
+
+  // Glide
+  implementation "com.github.bumptech.glide:glide:$glide_version"
+  implementation("com.github.bumptech.glide:okhttp3-integration:$glide_version") {
+    exclude group: 'glide-parent'
+  }
+
+  // Timber
+  implementation "com.jakewharton.timber:timber:$timber_version"
+
+  // LeakCanary
+  implementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+
+  // Navigation
+  implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+  implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+  // Paging
+  implementation "androidx.paging:paging-runtime:$paging_version"
+  implementation "androidx.paging:paging-rxjava2:$paging_version"
+
+  // JodaTime
+  implementation "net.danlew:android.joda:$joda_time_android_version"
+
+  testImplementation "junit:junit:$junit_version"
+  androidTestImplementation "androidx.test.ext:junit:$ext_version"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+
+}
