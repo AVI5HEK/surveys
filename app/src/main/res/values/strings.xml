@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name_debug">Surveys Debug</string>
+  <string name="app_name_release">Surveys</string>
+</resources>
