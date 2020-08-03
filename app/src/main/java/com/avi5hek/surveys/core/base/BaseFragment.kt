@@ -33,7 +33,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    init(savedInstanceState)
+    initialize(savedInstanceState)
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     bindWithViewModel()
   }
 
-  open fun init(savedInstanceState: Bundle?) {
+  open fun initialize(savedInstanceState: Bundle?) {
     configureViews()
   }
 

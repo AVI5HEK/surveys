@@ -50,6 +50,7 @@ abstract class BaseViewModel : ViewModel() {
 
   override fun onCleared() {
     Timber.d("onCleared() called")
+    compositeDisposable.clear()
     onClear()
     super.onCleared()
   }

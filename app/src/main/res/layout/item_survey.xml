@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+  <data>
+    <variable
+      name="survey"
+      type="com.avi5hek.surveys.presentation.model.Survey" />
+  </data>
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:id="@+id/image_survey"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:adjustViewBounds="true"
+      android:minHeight="100dp"
+      android:scaleType="centerCrop"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:src="@mipmap/ic_launcher" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/text_title"
+      style="@style/BaseTextAppearance.White.ExtraLarge"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@{survey.title}"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toTopOf="@+id/text_description"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.3"
+      app:layout_constraintVertical_chainStyle="packed"
+      tools:text="Octave" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/text_description"
+      style="@style/BaseTextAppearance.White.Large"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@{survey.description}"
+      android:textAlignment="center"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/text_title"
+      tools:text="Marriott Bangkok Sukhumvit Hotel" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,91 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+  <data>
+
+  </data>
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.avi5hek.surveys.presentation.feature.main.SurveyListFragment">
+
+    <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar_survey_list"
+      style="@style/AppTheme.ActionBar"
+      android:layout_width="match_parent"
+      android:layout_height="?android:attr/actionBarSize"
+      app:elevation="0dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+          android:id="@+id/text_toolbar_title"
+          style="@style/TextAppearance.Toolbar.title"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:gravity="center"
+          android:lines="1"
+          android:text="@string/surveys"
+          android:textAllCaps="true"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/image_hamburger"
+          app:layout_constraintStart_toEndOf="@+id/image_refresh"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+          android:id="@+id/image_hamburger"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:background="@android:color/transparent"
+          android:padding="6dp"
+          android:src="@drawable/ic_hamburger"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+          android:id="@+id/image_refresh"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:padding="6dp"
+          android:src="@drawable/ic_refresh"
+          android:tint="@color/white"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/pager"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_survey_list" />
+
+    <Button
+      android:id="@+id/button_take_survey"
+      style="@style/Button.Rounded"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="60dp"
+      android:paddingStart="24dp"
+      android:paddingEnd="24dp"
+      android:text="@string/take_the_survey"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

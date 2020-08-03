@@ -56,10 +56,10 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
       })
 
       it.error.observe(this, Observer { errorEvent ->
-        //handleError(it, activityNavigator,this, errorMessageFactory)
+        // TODO: move texts to strings.xml
         showDialog(
           "Error!",
-          "Some shit occurred",
+          "Some error occurred",
           "Retry",
           DialogInterface.OnClickListener { dialog, _ ->
             dialog.dismiss()
@@ -90,6 +90,7 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
   }
 
   open fun hideProgress() {
+    supportFragmentManager.executePendingTransactions()
     val fragment = supportFragmentManager
       .findFragmentByTag(CircularProgressDialogFragment.fragmentTag)
     fragment.cast<DialogFragment>()?.dismiss() ?: Timber.d("Failed to hide progress")
@@ -134,6 +135,10 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
   }
 
   override fun onBackPressed() {
-    finishAfterTransition()
+    if (isTaskRoot && supportFragmentManager.primaryNavigationFragment?.childFragmentManager?.backStackEntryCount == 0) {
+      finishAfterTransition()
+    } else {
+      super.onBackPressed()
+    }
   }
 }
