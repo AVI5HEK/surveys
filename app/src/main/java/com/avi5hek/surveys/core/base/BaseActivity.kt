@@ -59,13 +59,13 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
         // TODO: move texts to strings.xml
         showDialog(
           "Error!",
-          "Some error occurred",
-          "Retry",
-          DialogInterface.OnClickListener { dialog, _ ->
+          errorEvent.throwable.message,
+          if (errorEvent.onRetry != null) "Retry" else null,
+          if (errorEvent.onRetry != null) DialogInterface.OnClickListener { dialog, _ ->
             dialog.dismiss()
-            errorEvent.onRetry?.invoke()
-          },
-          "Cancel",
+            errorEvent.onRetry.invoke()
+          } else null,
+          if (errorEvent.onRetry != null) "Cancel" else "OK",
           DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
       })
     }

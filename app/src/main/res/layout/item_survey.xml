@@ -22,6 +22,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      app:url="@{survey.imageUrl}"
       tools:src="@mipmap/ic_launcher" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -30,6 +31,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@{survey.title}"
+      android:textAlignment="center"
       app:layout_constrainedWidth="true"
       app:layout_constraintBottom_toTopOf="@+id/text_description"
       app:layout_constraintEnd_toEndOf="parent"
