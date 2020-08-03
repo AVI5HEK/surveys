@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/navigation_main"
+  app:startDestination="@id/surveyListFragment">
+
+  <fragment
+    android:id="@+id/surveyListFragment"
+    android:name="com.avi5hek.surveys.presentation.feature.main.SurveyListFragment"
+    android:label="SurveyListFragment"
+    tools:layout="@layout/fragment_survey_list">
+    <action
+      android:id="@+id/action_surveyListFragment_to_surveyDetailFragment"
+      app:destination="@id/surveyDetailsFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/surveyDetailsFragment"
+    android:name="com.avi5hek.surveys.presentation.feature.main.SurveyDetailsFragment"
+    android:label="SurveyDetailFragment"
+    tools:layout="@layout/fragment_survey_details">
+
+    <argument
+      android:name="hotel_name"
+      app:argType="string"
+      app:nullable="true" />
+  </fragment>
+</navigation>

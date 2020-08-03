@@ -123,6 +123,9 @@ dependencies {
   // JodaTime
   implementation "net.danlew:android.joda:$joda_time_android_version"
 
+  // ViewPager 2
+  implementation "androidx.viewpager2:viewpager2:$view_pager_version"
+
   testImplementation "junit:junit:$junit_version"
   androidTestImplementation "androidx.test.ext:junit:$ext_version"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
