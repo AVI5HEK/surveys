@@ -12,6 +12,7 @@ buildscript {
   ext.ext_version = '1.1.1'
   ext.espresso_version = '3.2.0'
   ext.hilt_version = '2.28-alpha'
+  ext.hilt_lifecycle_version = '1.0.0-alpha02'
   ext.rx_java_version = '2.2.13'
   ext.rx_android_version = '2.1.1'
   ext.rx_kotlin_version = '2.4.0'
