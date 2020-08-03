@@ -66,7 +66,7 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
             errorEvent.onRetry?.invoke()
           },
           "Cancel",
-          DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+          DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
       })
     }
   }
