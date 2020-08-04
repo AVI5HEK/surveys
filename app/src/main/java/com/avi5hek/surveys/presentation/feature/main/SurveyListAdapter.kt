@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avi5hek.surveys.R
 import com.avi5hek.surveys.databinding.ItemSurveyBinding
 import com.avi5hek.surveys.presentation.model.Survey
-import com.bumptech.glide.Glide
 
 /**
  * Created by "Avishek" on 8/3/2020.
@@ -37,9 +36,6 @@ class SurveyListAdapter : PagingDataAdapter<Survey, SurveyListAdapter.ViewHolder
 
     fun bind(survey: Survey?) {
       binding.survey = survey
-      Glide.with(binding.root)
-        .load(survey?.imageUrl)
-        .into(binding.imageSurvey)
     }
   }
 
