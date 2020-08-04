@@ -1,14 +1,18 @@
 package com.avi5hek.surveys.presentation.feature.main
 
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import com.avi5hek.surveys.R
 import com.avi5hek.surveys.core.ViewState
 import com.avi5hek.surveys.core.base.BaseFragment
 import com.avi5hek.surveys.core.extension.setOnClickListenerWithDebounce
+import com.avi5hek.surveys.core.widget.CircleListIndicator
 import com.avi5hek.surveys.databinding.FragmentSurveyListBinding
 import timber.log.Timber
 
@@ -45,25 +49,44 @@ class SurveyListFragment : BaseFragment<FragmentSurveyListBinding>() {
 
   private fun configureList() {
     binding?.run {
-      surveyListAdapter.addLoadStateListener { loadStates ->
-        when (loadStates.refresh) {
-          is LoadState.Loading -> viewModel.showProgress()
-          is LoadState.Error -> viewModel.hideProgress()
-          else -> viewModel.hideProgress()
-        }
+      addLoadStateListener()
+      registerDataObserver()
 
-        val errorState = loadStates.source.append as? LoadState.Error
-          ?: loadStates.source.prepend as? LoadState.Error
-          ?: loadStates.append as? LoadState.Error
-          ?: loadStates.prepend as? LoadState.Error
-        errorState?.let {
-          viewModel.showError(it.error) {
-            surveyListAdapter.retry()
-          }
-        }
+      pager.addItemDecoration(CircleListIndicator())
+      pager.adapter = surveyListAdapter
+    }
+  }
+
+  private fun registerDataObserver() {
+    surveyListAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+      override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+        super.onItemRangeRemoved(positionStart, itemCount)
+        Timber.i("onItemRangeRemoved() called with itemCount: $itemCount")
+        binding?.pager?.invalidate()
       }
 
-      pager.adapter = surveyListAdapter
+      override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+        super.onItemRangeInserted(positionStart, itemCount)
+        Timber.i("onItemRangeInserted() called with itemCount: $itemCount")
+        binding?.pager?.invalidate()
+      }
+    })
+  }
+
+  private fun addLoadStateListener() {
+    surveyListAdapter.addLoadStateListener { loadStates ->
+      when (loadStates.refresh) {
+        is LoadState.Loading -> viewModel.showProgress()
+        is LoadState.Error -> viewModel.hideProgress()
+        else -> viewModel.hideProgress()
+      }
+
+      val errorState = loadStates.refresh as? LoadState.Error
+        ?: loadStates.source.append as? LoadState.Error
+        ?: loadStates.source.prepend as? LoadState.Error
+        ?: loadStates.append as? LoadState.Error
+        ?: loadStates.prepend as? LoadState.Error
+      errorState?.run { viewModel.retryLoading(error) }
     }
   }
 
@@ -79,6 +102,10 @@ class SurveyListFragment : BaseFragment<FragmentSurveyListBinding>() {
         is ViewState.Error -> viewModel.showError(it.throwable, it.onRetry)
         else -> throw IllegalStateException("State $it is not allowed.")
       }
+    })
+
+    viewModel.retryLoadingLiveData.observe(this, Observer {
+      surveyListAdapter.retry()
     })
   }
 }

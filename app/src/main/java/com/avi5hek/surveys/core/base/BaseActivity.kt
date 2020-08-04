@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import com.avi5hek.surveys.core.ActivityNavigator
 import com.avi5hek.surveys.core.CircularProgressDialogFragment
 import com.avi5hek.surveys.core.extension.cast
+import com.avi5hek.surveys.core.extension.hideProgress
+import com.avi5hek.surveys.core.extension.showProgress
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,6 +58,7 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
       })
 
       it.error.observe(this, Observer { errorEvent ->
+        Timber.e(errorEvent.throwable)
         // TODO: move texts to strings.xml
         showDialog(
           "Error!",
@@ -73,27 +76,6 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
 
   open fun getBaseViewModel(): BaseViewModel? {
     return null
-  }
-
-  open fun showProgress() {
-    var fragment: CircularProgressDialogFragment? = supportFragmentManager
-      .findFragmentByTag(
-        CircularProgressDialogFragment.fragmentTag
-      ) as CircularProgressDialogFragment?
-    if (fragment == null) {
-      fragment = CircularProgressDialogFragment.newInstance()
-    }
-    if (!fragment.isAdded) {
-      fragment
-        .show(supportFragmentManager, CircularProgressDialogFragment.fragmentTag)
-    }
-  }
-
-  open fun hideProgress() {
-    supportFragmentManager.executePendingTransactions()
-    val fragment = supportFragmentManager
-      .findFragmentByTag(CircularProgressDialogFragment.fragmentTag)
-    fragment.cast<DialogFragment>()?.dismiss() ?: Timber.d("Failed to hide progress")
   }
 
   fun showDialog(

@@ -5,4 +5,6 @@
   <string name="surveys">Surveys</string>
   <string name="take_the_survey">Take the survey</string>
   <string name="hello">Hello from %1$s</string>
+  <string name="content_description_menu">Menu</string>
+  <string name="content_description_refresh">Refresh</string>
 </resources>

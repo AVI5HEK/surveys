@@ -28,7 +28,6 @@ abstract class AppModule {
 
   companion object {
 
-    @JvmStatic
     @Provides
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
       return context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)

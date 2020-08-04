@@ -28,7 +28,6 @@ abstract class AuthModule {
 
   companion object {
 
-    @JvmStatic
     @Singleton
     @Provides
     @AuthApiQualifier
@@ -43,7 +42,6 @@ abstract class AuthModule {
       return httpClient.build()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     @AuthApiQualifier

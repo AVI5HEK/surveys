@@ -1,6 +1,7 @@
 package com.avi5hek.surveys.data.preference
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.avi5hek.surveys.core.constant.ACCESS_TOKEN
 import com.avi5hek.surveys.data.dao.TokenDao
 import javax.inject.Inject
@@ -12,7 +13,7 @@ class AppPreferenceHelper
 constructor(private val sharedPreferences: SharedPreferences) : TokenDao {
 
   override fun saveAccessToken(value: String) {
-    sharedPreferences.edit().putString(ACCESS_TOKEN, value).apply()
+    sharedPreferences.edit { putString(ACCESS_TOKEN, value) }
   }
 
   override fun loadAccessToken(): String {

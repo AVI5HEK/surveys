@@ -110,7 +110,7 @@ dependencies {
   implementation "com.jakewharton.timber:timber:$timber_version"
 
   // LeakCanary
-  implementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+  debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
 
   // Navigation
   implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"

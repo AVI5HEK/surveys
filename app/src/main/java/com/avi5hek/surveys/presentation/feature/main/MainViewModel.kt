@@ -33,6 +33,7 @@ constructor(
   BaseViewModel() {
 
   val surveysLiveData by lazy { SingleLiveEvent<ViewState<PagingData<Survey>>>() }
+  val retryLoadingLiveData by lazy { SingleLiveEvent<Unit>() }
   private val surveysFlowable by lazy {
     Pager(
       config = PagingConfig(
@@ -93,6 +94,12 @@ constructor(
           }
         )
     )
+  }
+
+  fun retryLoading(throwable: Throwable) {
+    showError(throwable) {
+      retryLoadingLiveData.value = Unit
+    }
   }
 
   override fun onClear() {

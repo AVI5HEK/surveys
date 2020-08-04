@@ -39,10 +39,11 @@
 
         <ImageButton
           android:id="@+id/image_hamburger"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
           android:layout_marginEnd="16dp"
           android:background="@android:color/transparent"
+          android:contentDescription="@string/content_description_menu"
           android:padding="6dp"
           android:src="@drawable/ic_hamburger"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -51,9 +52,10 @@
 
         <ImageView
           android:id="@+id/image_refresh"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
           android:layout_marginStart="16dp"
+          android:contentDescription="@string/content_description_refresh"
           android:padding="6dp"
           android:src="@drawable/ic_refresh"
           android:tint="@color/white"
