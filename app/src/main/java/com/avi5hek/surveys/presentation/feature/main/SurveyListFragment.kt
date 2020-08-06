@@ -1,11 +1,9 @@
 package com.avi5hek.surveys.presentation.feature.main
 
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.avi5hek.surveys.R
@@ -40,9 +38,11 @@ class SurveyListFragment : BaseFragment<FragmentSurveyListBinding>() {
       buttonTakeSurvey.setOnClickListenerWithDebounce {
         val currentSurvey = surveyListAdapter.getData(pager.currentItem)
         Timber.i("Selected survey ID: ${currentSurvey?.id}")
-        val action =
-          SurveyListFragmentDirections.actionSurveyListFragmentToSurveyDetailFragment(currentSurvey?.title)
-        findNavController().navigate(action)
+        currentSurvey?.run {
+          val action =
+            SurveyListFragmentDirections.actionSurveyListFragmentToSurveyDetailFragment(title)
+          findNavController().navigate(action)
+        } ?: viewModel.retryLoading(Throwable("No data available. Retry loading maybe?"))
       }
     }
   }

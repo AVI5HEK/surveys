@@ -29,7 +29,7 @@ class SurveyListAdapter : PagingDataAdapter<Survey, SurveyListAdapter.ViewHolder
     return ViewHolder(binding)
   }
 
-  fun getData(position: Int): Survey? = getItem(position)
+  fun getData(position: Int): Survey? = if (itemCount > position) getItem(position) else null
 
   inner class ViewHolder(private val binding: ItemSurveyBinding) :
     RecyclerView.ViewHolder(binding.root) {

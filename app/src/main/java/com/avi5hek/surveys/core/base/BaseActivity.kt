@@ -7,11 +7,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.avi5hek.surveys.core.ActivityNavigator
-import com.avi5hek.surveys.core.CircularProgressDialogFragment
-import com.avi5hek.surveys.core.extension.cast
 import com.avi5hek.surveys.core.extension.hideProgress
 import com.avi5hek.surveys.core.extension.showProgress
 import timber.log.Timber

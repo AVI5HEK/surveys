@@ -22,7 +22,6 @@
 
     <argument
       android:name="hotel_name"
-      app:argType="string"
-      app:nullable="true" />
+      app:argType="string" />
   </fragment>
 </navigation>
