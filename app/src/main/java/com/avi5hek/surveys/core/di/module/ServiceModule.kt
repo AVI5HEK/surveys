@@ -17,14 +17,12 @@ abstract class ServiceModule {
 
     companion object {
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideSurveyService(@HostApiQualifier retrofit: Retrofit): SurveyService {
             return retrofit.create(SurveyService::class.java)
         }
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideTokenService(@AuthApiQualifier retrofit: Retrofit): TokenService {

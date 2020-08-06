@@ -23,6 +23,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:url="@{survey.imageUrl}"
+      tools:ignore="contentDescription"
       tools:src="@mipmap/ic_launcher" />
 
     <androidx.appcompat.widget.AppCompatTextView

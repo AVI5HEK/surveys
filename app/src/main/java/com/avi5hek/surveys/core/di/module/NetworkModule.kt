@@ -42,16 +42,16 @@ abstract class NetworkModule {
     const val READ_TIMEOUT_S: Long = 30
     const val WRITE_TIMEOUT_S: Long = 30
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
       val interceptor = HttpLoggingInterceptor()
-      interceptor.level = HttpLoggingInterceptor.Level.BODY
+      if (BuildConfig.DEBUG) {
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+      }
       return interceptor
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideInterceptor(tokenDao: TokenDao): Interceptor {
@@ -71,7 +71,6 @@ abstract class NetworkModule {
       }
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     @HostApiQualifier
@@ -91,7 +90,6 @@ abstract class NetworkModule {
       return httpClient.build()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideGson(): Gson {
@@ -103,7 +101,6 @@ abstract class NetworkModule {
         .create()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     @HostApiQualifier

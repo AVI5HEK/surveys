@@ -27,8 +27,7 @@ open class CircularProgressDialogFragment : DialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    val view = inflater.inflate(R.layout.fragment_dialog_circular_progress, container, false)
-    return view
+    return inflater.inflate(R.layout.fragment_dialog_circular_progress, container, false)
   }
 
   override fun onResume() {
