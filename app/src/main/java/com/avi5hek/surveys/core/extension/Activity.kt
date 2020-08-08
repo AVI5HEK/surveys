@@ -2,10 +2,8 @@ package com.avi5hek.surveys.core.extension
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.avi5hek.surveys.core.CircularProgressDialogFragment

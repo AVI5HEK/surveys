@@ -8,7 +8,6 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-
 /**
  * Created by "Avishek" on 8/3/2020.
  */
@@ -19,46 +18,43 @@ constructor(
   private val tokenDao: TokenDao
 ) : Authenticator {
 
-  private var request: Request? = null
-
   @Throws(IOException::class)
   override fun authenticate(route: Route?, response: Response): Request? {
     Timber.d("authenticate() called for host: ${response.request.url.host}")
-    this.request = null
 
-    val requestBody: RequestBody = MultipartBody.Builder()
-      .setType(MultipartBody.FORM)
-      .addFormDataPart("grant_type", "password")
-      .addFormDataPart("username", "carlos@nimbl3.com")
-      .addFormDataPart("password", "antikera")
-      .build()
-
-    val tokenResponse = authService
-      .refreshToken(requestBody)
-      .execute()
-
-    val refreshTokenResponse = tokenResponse.body()
-
-    if (refreshTokenResponse != null && tokenResponse.isSuccessful) {
-
-      val accessToken = refreshTokenResponse.accessToken
-
-      tokenDao.saveAccessToken(accessToken)
-
-      this.request = response.request.newBuilder()
-        .header(NetworkModule.HEADER_CONTENT_TYPE, NetworkModule.HEADER_CONTENT_TYPE_VALUE)
-        .header(
-          NetworkModule.HEADER_AUTHORIZATION,
-          NetworkModule.HEADER_AUTHORIZATION_TYPE + accessToken
-        )
-        .build()
-    }
-
-    // return null to stop retrying once responseCount returns 3 or above.
-    return if (responseCount(response) >= 3) {
+    return if (responseCount(response) >= 2) {
       null
-    } else this.request
+    } else {
+      val requestBody: RequestBody = MultipartBody.Builder()
+        .setType(MultipartBody.FORM)
+        .addFormDataPart("grant_type", "password")
+        .addFormDataPart("username", "carlos@nimbl3.com")
+        .addFormDataPart("password", "antikera")
+        .build()
 
+      val tokenResponse = authService
+        .refreshToken(requestBody)
+        .execute()
+
+      val refreshTokenResponse = tokenResponse.body()
+
+      if (refreshTokenResponse != null && tokenResponse.isSuccessful) {
+
+        val accessToken = refreshTokenResponse.accessToken
+
+        tokenDao.saveAccessToken(accessToken)
+
+        response.request.newBuilder()
+          .header(NetworkModule.HEADER_CONTENT_TYPE, NetworkModule.HEADER_CONTENT_TYPE_VALUE)
+          .header(
+            NetworkModule.HEADER_AUTHORIZATION,
+            NetworkModule.HEADER_AUTHORIZATION_TYPE + accessToken
+          )
+          .build()
+      } else {
+        null
+      }
+    }
   }
 
   private fun responseCount(response: Response?): Int {

@@ -1,7 +1,7 @@
 package com.avi5hek.surveys.data.repository
 
 import com.avi5hek.surveys.core.NetworkHandler
-import com.avi5hek.surveys.core.exception.ErrorProgressHelper
+import com.avi5hek.surveys.core.exception.ErrorHelper
 import com.avi5hek.surveys.core.exception.NetworkConnectionException
 import com.avi5hek.surveys.core.exception.ServerException
 import com.avi5hek.surveys.data.model.ErrorResponse
@@ -29,7 +29,7 @@ constructor(
       return Single.error(NetworkConnectionException())
     }
     return surveyService.getSurveys(page, pageSize)
-      .compose(ErrorProgressHelper.applyError(errorConverter))
+      .compose(ErrorHelper.applyError(errorConverter))
       .map { response ->
         val surveys = response.body()
         surveys?.map { DomainSurvey(it.id, it.title, it.description, it.coverImageUrl + "l") }

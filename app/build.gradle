@@ -93,6 +93,7 @@ dependencies {
   // OkHttp
   implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
   implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+  testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
   // Retrofit
   implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -126,7 +127,14 @@ dependencies {
   // ViewPager 2
   implementation "androidx.viewpager2:viewpager2:$view_pager_version"
 
+  // Mockito
+  testImplementation "org.mockito:mockito-core:$mockito_core_version"
+  testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
+  testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
+
   testImplementation "junit:junit:$junit_version"
+  testImplementation "androidx.arch.core:core-testing:$arch_core_testing_version"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_test_version"
   androidTestImplementation "androidx.test.ext:junit:$ext_version"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 

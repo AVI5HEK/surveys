@@ -7,7 +7,7 @@ import retrofit2.Converter
 import retrofit2.Response
 import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 
-object ErrorProgressHelper {
+object ErrorHelper {
 
   fun <T> applyError(errorConverter: Converter<ResponseBody, ErrorResponse>): SingleTransformer<Response<T>, Response<T>> {
     return SingleTransformer {
@@ -15,7 +15,7 @@ object ErrorProgressHelper {
         if (!response.isSuccessful) {
           response?.errorBody()?.apply {
             if (isTokenExpired(response.code())) {
-              throw TokenExpiredException()
+              throw TokenExpiredException("Authentication failed")
             }
             val errorResponse = errorConverter.convert(this)
             val message = errorResponse?.message ?: ""
