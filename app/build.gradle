@@ -31,7 +31,6 @@ android {
       shrinkResources false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-      resValue "string", "app_name", "@string/app_name_debug"
       buildConfigField "String", "BASE_URL", '"https://nimble-survey-api.herokuapp.com/"'
     }
     release {
@@ -39,7 +38,6 @@ android {
       shrinkResources true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-      resValue "string", "app_name", "@string/app_name_release"
       buildConfigField "String", "BASE_URL", '"https://nimble-survey-api.herokuapp.com/"'
     }
   }
@@ -147,5 +145,6 @@ dependencies {
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_test_version"
   androidTestImplementation "androidx.test.ext:junit:$ext_version"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-
+  androidTestImplementation "androidx.test:rules:$test_rules_version"
+  androidTestImplementation "com.azimolabs.conditionwatcher:conditionwatcher:$condition_watcher_version"
 }
