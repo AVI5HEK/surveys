@@ -1,17 +1,15 @@
 package com.avi5hek.surveys.presentation.feature.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
-import com.avi5hek.surveys.core.PagingFlowableFactory
-import com.avi5hek.surveys.core.ViewState
+import com.avi5hek.surveys.core.PagingLiveDataFactory
 import com.avi5hek.surveys.core.base.BaseViewModel
 import com.avi5hek.surveys.core.scheduler.SchedulerProvider
 import com.avi5hek.surveys.presentation.model.SurveyUiModel
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Flowable
-import io.reactivex.schedulers.TestScheduler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -33,8 +31,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
 
-  private lateinit var testScheduler: TestScheduler
-
   private val testDispatcher = TestCoroutineDispatcher()
   private val testScope = TestCoroutineScope(testDispatcher)
 
@@ -49,7 +45,7 @@ class MainViewModelTest {
   private lateinit var schedulerProvider: SchedulerProvider
 
   @Mock
-  private lateinit var surveysObserver: Observer<ViewState<PagingData<SurveyUiModel>>>
+  private lateinit var surveysObserver: Observer<PagingData<SurveyUiModel>>
 
   @Mock
   private lateinit var retryObserver: Observer<Unit>
@@ -58,7 +54,7 @@ class MainViewModelTest {
   private lateinit var errorObserver: Observer<BaseViewModel.ErrorEvent>
 
   @Mock
-  private lateinit var pagingFlowableFactory: PagingFlowableFactory<SurveyUiModel>
+  private lateinit var pagingLiveDataFactory: PagingLiveDataFactory<SurveyUiModel>
 
   private lateinit var viewModel: MainViewModel
 
@@ -66,17 +62,11 @@ class MainViewModelTest {
   fun setUp() {
     Dispatchers.setMain(testDispatcher)
 
-    testScheduler = TestScheduler()
-    whenever(schedulerProvider.io()).thenReturn(testScheduler)
-    whenever(schedulerProvider.ui()).thenReturn(testScheduler)
-
     viewModel =
       MainViewModel(
         savedStateHandle,
-        schedulerProvider,
-        pagingFlowableFactory
+        pagingLiveDataFactory
       )
-    viewModel.surveysLiveData.observeForever(surveysObserver)
     viewModel.retryLoadingLiveData.observeForever(retryObserver)
     viewModel.error.observeForever(errorObserver)
     viewModel.error.observeForever {
@@ -87,14 +77,13 @@ class MainViewModelTest {
   @Test
   fun `should get data`() {
     val mockPagingData = PagingData.from(listOf<SurveyUiModel>())
-    whenever(pagingFlowableFactory.create()).thenReturn(Flowable.just(mockPagingData))
+    whenever(pagingLiveDataFactory.create()).thenReturn(MutableLiveData(mockPagingData))
 
-    viewModel.getData()
-    testScheduler.triggerActions()
+    viewModel.surveysLiveData.observeForever(surveysObserver)
 
-    verify(pagingFlowableFactory).create()
-    verify(surveysObserver).onChanged(eq(ViewState.Success(mockPagingData)))
-    verifyNoMoreInteractions(pagingFlowableFactory)
+    verify(pagingLiveDataFactory).create()
+    verify(surveysObserver).onChanged(eq(mockPagingData))
+    verifyNoMoreInteractions(pagingLiveDataFactory)
   }
 
   @Test
@@ -117,8 +106,8 @@ class MainViewModelTest {
   fun `should dispose pagingFlowableFactory in onClear()`() {
     viewModel.onClear()
 
-    verify(pagingFlowableFactory).dispose()
-    verifyNoMoreInteractions(pagingFlowableFactory)
+    verify(pagingLiveDataFactory).dispose()
+    verifyNoMoreInteractions(pagingLiveDataFactory)
     verifyNoMoreInteractions(schedulerProvider)
   }
 
