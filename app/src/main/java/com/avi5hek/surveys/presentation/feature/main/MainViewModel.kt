@@ -9,7 +9,7 @@ import com.avi5hek.surveys.core.SingleLiveEvent
 import com.avi5hek.surveys.core.ViewState
 import com.avi5hek.surveys.core.base.BaseViewModel
 import com.avi5hek.surveys.core.scheduler.SchedulerProvider
-import com.avi5hek.surveys.presentation.model.Survey
+import com.avi5hek.surveys.presentation.model.SurveyUiModel
 
 /**
  * Created by "Avishek" on 8/3/2020.
@@ -19,11 +19,11 @@ class MainViewModel
 constructor(
   @Assisted private val savedStateHandle: SavedStateHandle,
   private val schedulerProvider: SchedulerProvider,
-  private val pagingFlowableFactory: PagingFlowableFactory<Survey>
+  private val pagingFlowableFactory: PagingFlowableFactory<SurveyUiModel>
 ) :
   BaseViewModel() {
 
-  val surveysLiveData by lazy { SingleLiveEvent<ViewState<PagingData<Survey>>>() }
+  val surveysLiveData by lazy { SingleLiveEvent<ViewState<PagingData<SurveyUiModel>>>() }
   val retryLoadingLiveData by lazy { SingleLiveEvent<Unit>() }
 
   private val surveysFlowable by lazy { pagingFlowableFactory.create() }

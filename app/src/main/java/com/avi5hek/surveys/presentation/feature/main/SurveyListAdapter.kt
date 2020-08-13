@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.avi5hek.surveys.R
 import com.avi5hek.surveys.databinding.ItemSurveyBinding
-import com.avi5hek.surveys.presentation.model.Survey
+import com.avi5hek.surveys.presentation.model.SurveyUiModel
 
 /**
  * Created by "Avishek" on 8/3/2020.
  */
-class SurveyListAdapter : PagingDataAdapter<Survey, SurveyListAdapter.ViewHolder>(COMPARATOR) {
+class SurveyListAdapter : PagingDataAdapter<SurveyUiModel, SurveyListAdapter.ViewHolder>(COMPARATOR) {
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     holder.bind(getItem(position))
@@ -29,23 +29,23 @@ class SurveyListAdapter : PagingDataAdapter<Survey, SurveyListAdapter.ViewHolder
     return ViewHolder(binding)
   }
 
-  fun getData(position: Int): Survey? = if (itemCount > position) getItem(position) else null
+  fun getData(position: Int): SurveyUiModel? = if (itemCount > position) getItem(position) else null
 
   inner class ViewHolder(private val binding: ItemSurveyBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(survey: Survey?) {
-      binding.survey = survey
+    fun bind(surveyUiModel: SurveyUiModel?) {
+      binding.survey = surveyUiModel
     }
   }
 
   companion object {
-    private val COMPARATOR = object : DiffUtil.ItemCallback<Survey>() {
+    private val COMPARATOR = object : DiffUtil.ItemCallback<SurveyUiModel>() {
 
-      override fun areItemsTheSame(oldItem: Survey, newItem: Survey): Boolean =
+      override fun areItemsTheSame(oldItem: SurveyUiModel, newItem: SurveyUiModel): Boolean =
         oldItem.id == newItem.id
 
-      override fun areContentsTheSame(oldItem: Survey, newItem: Survey): Boolean =
+      override fun areContentsTheSame(oldItem: SurveyUiModel, newItem: SurveyUiModel): Boolean =
         oldItem == newItem
     }
   }
