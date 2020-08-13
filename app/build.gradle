@@ -5,6 +5,10 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'dagger.hilt.android.plugin'
 
+def authCredentialsFile = rootProject.file("authCredentials.properties")
+def authCredentials = new Properties()
+authCredentials.load(new FileInputStream(authCredentialsFile))
+
 android {
   compileSdkVersion 29
   buildToolsVersion "30.0.1"
@@ -38,6 +42,12 @@ android {
       resValue "string", "app_name", "@string/app_name_release"
       buildConfigField "String", "BASE_URL", '"https://nimble-survey-api.herokuapp.com/"'
     }
+  }
+
+  buildTypes.each {
+    it.buildConfigField "String", "GRANT_TYPE", authCredentials['grantType']
+    it.buildConfigField "String", "USERNAME", authCredentials['username']
+    it.buildConfigField "String", "PASSWORD", authCredentials['password']
   }
 
   androidExtensions {
