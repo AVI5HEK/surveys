@@ -3,7 +3,7 @@ package com.avi5hek.surveys.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Survey(
+data class SurveyResponse(
   @SerializedName("id")
   val id: String,
   @SerializedName("title")

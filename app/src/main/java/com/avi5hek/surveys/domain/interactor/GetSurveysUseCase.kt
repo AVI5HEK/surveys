@@ -10,10 +10,10 @@ import javax.inject.Inject
 /**
  * Created by "Avishek" on 8/3/2020.
  */
-class GetSurveys
+class GetSurveysUseCase
 @Inject
 constructor(schedulerProvider: SchedulerProvider, private val surveyRepository: SurveyRepository) :
-  SingleUseCase<List<Survey>, GetSurveys.Params>(schedulerProvider) {
+  SingleUseCase<List<Survey>, GetSurveysUseCase.Params>(schedulerProvider) {
 
   data class Params(val page: Int, val pageSize: Int)
 
