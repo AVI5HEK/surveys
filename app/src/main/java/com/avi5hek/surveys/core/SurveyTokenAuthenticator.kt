@@ -1,5 +1,6 @@
 package com.avi5hek.surveys.core
 
+import com.avi5hek.surveys.BuildConfig
 import com.avi5hek.surveys.core.di.module.NetworkModule
 import com.avi5hek.surveys.data.dao.TokenDao
 import com.avi5hek.surveys.data.service.TokenService
@@ -27,9 +28,9 @@ constructor(
     } else {
       val requestBody: RequestBody = MultipartBody.Builder()
         .setType(MultipartBody.FORM)
-        .addFormDataPart("grant_type", "password")
-        .addFormDataPart("username", "carlos@nimbl3.com")
-        .addFormDataPart("password", "antikera")
+        .addFormDataPart("grant_type", BuildConfig.GRANT_TYPE)
+        .addFormDataPart("username", BuildConfig.USERNAME)
+        .addFormDataPart("password", BuildConfig.PASSWORD)
         .build()
 
       val tokenResponse = authService

@@ -17,3 +17,5 @@
 # Keystore files
 keystore.properties
 *.jks
+
+authCredentials.properties
