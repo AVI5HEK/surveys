@@ -4,12 +4,9 @@ import com.avi5hek.surveys.core.NetworkHandler
 import com.avi5hek.surveys.core.exception.NetworkConnectionException
 import com.avi5hek.surveys.core.exception.ServerException
 import com.avi5hek.surveys.core.exception.TokenExpiredException
-import com.avi5hek.surveys.core.scheduler.SchedulerProvider
-import com.avi5hek.surveys.data.dao.TokenDao
 import com.avi5hek.surveys.data.model.ErrorResponse
-import com.avi5hek.surveys.data.model.Survey
+import com.avi5hek.surveys.data.model.SurveyResponse
 import com.avi5hek.surveys.data.service.SurveyService
-import com.avi5hek.surveys.data.service.TokenService
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
@@ -38,7 +35,7 @@ class SurveyDataRepositoryTest {
     const val PAGE_SIZE = 10
   }
 
-  private val testSurvey = Survey("", "", "", "")
+  private val testSurvey = SurveyResponse("", "", "", "")
 
   @Mock
   private lateinit var networkHandler: NetworkHandler
@@ -104,7 +101,7 @@ class SurveyDataRepositoryTest {
   @Test
   fun `should get a server exception`() {
     val responseBody = Mockito.mock(ResponseBody::class.java)
-    val response = Response.error<List<Survey>>(404, responseBody)
+    val response = Response.error<List<SurveyResponse>>(404, responseBody)
     whenever(networkHandler.isConnected).thenReturn(true)
     whenever(surveyService.getSurveys(any(), any())).thenReturn(Single.just(response))
 
@@ -121,7 +118,7 @@ class SurveyDataRepositoryTest {
   @Test
   fun `should get unauthorized error`() {
     val responseBody = Mockito.mock(ResponseBody::class.java)
-    val response = Response.error<List<Survey>>(401, responseBody)
+    val response = Response.error<List<SurveyResponse>>(401, responseBody)
     whenever(networkHandler.isConnected).thenReturn(true)
     whenever(surveyService.getSurveys(any(), any())).thenReturn(Single.just(response))
 

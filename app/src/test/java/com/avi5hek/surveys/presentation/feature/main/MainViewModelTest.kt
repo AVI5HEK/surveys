@@ -8,7 +8,7 @@ import com.avi5hek.surveys.core.PagingFlowableFactory
 import com.avi5hek.surveys.core.ViewState
 import com.avi5hek.surveys.core.base.BaseViewModel
 import com.avi5hek.surveys.core.scheduler.SchedulerProvider
-import com.avi5hek.surveys.presentation.model.Survey
+import com.avi5hek.surveys.presentation.model.SurveyUiModel
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Flowable
 import io.reactivex.schedulers.TestScheduler
@@ -24,8 +24,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -51,7 +49,7 @@ class MainViewModelTest {
   private lateinit var schedulerProvider: SchedulerProvider
 
   @Mock
-  private lateinit var surveysObserver: Observer<ViewState<PagingData<Survey>>>
+  private lateinit var surveysObserver: Observer<ViewState<PagingData<SurveyUiModel>>>
 
   @Mock
   private lateinit var retryObserver: Observer<Unit>
@@ -60,7 +58,7 @@ class MainViewModelTest {
   private lateinit var errorObserver: Observer<BaseViewModel.ErrorEvent>
 
   @Mock
-  private lateinit var pagingFlowableFactory: PagingFlowableFactory<Survey>
+  private lateinit var pagingFlowableFactory: PagingFlowableFactory<SurveyUiModel>
 
   private lateinit var viewModel: MainViewModel
 
@@ -88,7 +86,7 @@ class MainViewModelTest {
 
   @Test
   fun `should get data`() {
-    val mockPagingData = PagingData.from(listOf<Survey>())
+    val mockPagingData = PagingData.from(listOf<SurveyUiModel>())
     whenever(pagingFlowableFactory.create()).thenReturn(Flowable.just(mockPagingData))
 
     viewModel.getData()

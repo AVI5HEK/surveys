@@ -19,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import okhttp3.ResponseBody
 import retrofit2.Converter
-import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module

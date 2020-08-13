@@ -1,6 +1,5 @@
 <resources>
-  <string name="app_name_debug">Surveys Debug</string>
-  <string name="app_name_release">Surveys</string>
+  <string name="app_name">Surveys</string>
   <string name="leak_canary_display_activity_label">Surveys Leaks</string>
   <string name="surveys">Surveys</string>
   <string name="take_the_survey">Take the survey</string>

@@ -5,7 +5,6 @@ import com.avi5hek.surveys.domain.model.Survey
 import com.avi5hek.surveys.domain.repository.SurveyRepository
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Assert.assertTrue
@@ -19,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by "Avishek" on 8/7/2020.
  */
 @RunWith(MockitoJUnitRunner::class)
-class GetSurveysTest {
+class GetSurveysUseCaseTest {
 
   companion object {
     const val PAGE = 1
@@ -32,7 +31,7 @@ class GetSurveysTest {
   @Mock
   private lateinit var surveyRepository: SurveyRepository
 
-  private lateinit var getSurveys: GetSurveys
+  private lateinit var getSurveysUseCase: GetSurveysUseCase
 
   private val testScheduler = TestScheduler()
 
@@ -41,7 +40,7 @@ class GetSurveysTest {
     whenever(schedulerProvider.io()).thenReturn(testScheduler)
     whenever(schedulerProvider.ui()).thenReturn(testScheduler)
 
-    getSurveys = GetSurveys(schedulerProvider, surveyRepository)
+    getSurveysUseCase = GetSurveysUseCase(schedulerProvider, surveyRepository)
   }
 
   @Test
@@ -54,7 +53,7 @@ class GetSurveysTest {
 
     whenever(surveyRepository.getSurveys(any(), any())).thenReturn(Single.just(testSurveys))
 
-    getSurveys.execute(object : DisposableSingleObserver<List<Survey>>() {
+    getSurveysUseCase.execute(object : DisposableSingleObserver<List<Survey>>() {
       override fun onSuccess(t: List<Survey>) {
         assertTrue(t.isNotEmpty())
       }
@@ -62,7 +61,7 @@ class GetSurveysTest {
       override fun onError(e: Throwable) {
         // no op
       }
-    }, GetSurveys.Params(PAGE, PAGE_SIZE))
+    }, GetSurveysUseCase.Params(PAGE, PAGE_SIZE))
 
     testScheduler.triggerActions()
 

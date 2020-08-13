@@ -9,8 +9,8 @@ import com.avi5hek.surveys.core.GenericPagingSource
 import com.avi5hek.surveys.core.PagingFlowableFactory
 import com.avi5hek.surveys.core.di.qualifier.MainCoroutineScopeQualifier
 import com.avi5hek.surveys.core.scheduler.SchedulerProvider
-import com.avi5hek.surveys.domain.interactor.GetSurveys
-import com.avi5hek.surveys.presentation.model.Survey
+import com.avi5hek.surveys.domain.interactor.GetSurveysUseCase
+import com.avi5hek.surveys.presentation.model.SurveyUiModel
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.observers.DisposableSingleObserver
@@ -24,12 +24,12 @@ import com.avi5hek.surveys.domain.model.Survey as DomainSurvey
 class SurveyPagingFlowableFactory
 @Inject
 constructor(
-  private val getSurveys: GetSurveys,
+  private val getSurveysUseCase: GetSurveysUseCase,
   private val schedulerProvider: SchedulerProvider,
   @MainCoroutineScopeQualifier private val coroutineScope: CoroutineScope
-) : PagingFlowableFactory<Survey> {
+) : PagingFlowableFactory<SurveyUiModel> {
 
-  override fun create(): Flowable<PagingData<Survey>> {
+  override fun create(): Flowable<PagingData<SurveyUiModel>> {
     return Pager(
       config = PagingConfig(
         initialLoadSize = 10,
@@ -38,8 +38,8 @@ constructor(
         enablePlaceholders = false
       ),
       pagingSourceFactory = {
-        object : GenericPagingSource<Survey>() {
-          override fun getSingle(page: Int, pageSize: Int): Single<List<Survey>> =
+        object : GenericPagingSource<SurveyUiModel>() {
+          override fun getSingle(page: Int, pageSize: Int): Single<List<SurveyUiModel>> =
             getSurveys(page, pageSize)
               .subscribeOn(schedulerProvider.io())
         }
@@ -47,14 +47,14 @@ constructor(
     ).flowable.cachedIn(coroutineScope)
   }
 
-  private fun getSurveys(page: Int, pageSize: Int): Single<List<Survey>> {
+  private fun getSurveys(page: Int, pageSize: Int): Single<List<SurveyUiModel>> {
     return Single.create { singleEmitter ->
-      getSurveys.execute(object :
+      getSurveysUseCase.execute(object :
         DisposableSingleObserver<List<DomainSurvey>>() {
         override fun onSuccess(surveys: List<DomainSurvey>) {
           if (!singleEmitter.isDisposed) {
             singleEmitter.onSuccess(surveys.map {
-              Survey(
+              SurveyUiModel(
                 it.id,
                 it.title,
                 it.description,
@@ -70,11 +70,11 @@ constructor(
           }
         }
 
-      }, GetSurveys.Params(page, pageSize))
+      }, GetSurveysUseCase.Params(page, pageSize))
     }
   }
 
   override fun dispose() {
-    getSurveys.dispose()
+    getSurveysUseCase.dispose()
   }
 }
