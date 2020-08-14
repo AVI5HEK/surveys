@@ -4,8 +4,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.avi5hek.surveys.R
@@ -59,6 +58,43 @@ class MainActivityTest {
       .perform(click())
 
     onView(withId(R.id.text_message))
+      .check(matches(isDisplayed()))
+  }
+
+  @Test
+  fun whenRefreshIsClicked_CheckLoadingStarted() {
+    ConditionWatcher.setTimeoutLimit(30000)
+    ConditionWatcher.waitForCondition(LoadingDialogInstruction(activityRule.activity))
+
+    // FIXME: this shouldn't be needed
+    onView(withText("Cancel"))
+      .perform(click())
+
+    onView(withId(R.id.image_refresh))
+      .perform(click())
+
+    onView(withId(R.id.progress_bar))
+      .check(matches(isDisplayed()))
+  }
+
+  @Test
+  fun whenLoadingIsFinished_CheckErrorDialogIsDisplayed() {
+    ConditionWatcher.setTimeoutLimit(30000)
+    ConditionWatcher.waitForCondition(LoadingDialogInstruction(activityRule.activity))
+
+    onView(withText("Retry"))
+      .check(matches(isDisplayed()))
+  }
+
+  @Test
+  fun whenRetryIsClicked_CheckLoadingStarted() {
+    ConditionWatcher.setTimeoutLimit(30000)
+    ConditionWatcher.waitForCondition(LoadingDialogInstruction(activityRule.activity))
+
+    onView(withText("Retry"))
+      .perform(click())
+
+    onView(withId(R.id.progress_bar))
       .check(matches(isDisplayed()))
   }
 
