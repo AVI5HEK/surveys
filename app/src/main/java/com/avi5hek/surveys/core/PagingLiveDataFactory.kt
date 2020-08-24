@@ -1,14 +1,14 @@
 package com.avi5hek.surveys.core
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
-import io.reactivex.Flowable
 
 /**
  * Created by "Avishek" on 8/7/2020.
  */
-interface PagingFlowableFactory<T : Any> {
+interface PagingLiveDataFactory<T : Any> {
 
-  fun create(): Flowable<PagingData<T>>
+  fun create(): LiveData<PagingData<T>>
 
   fun dispose()
 }
