@@ -60,7 +60,9 @@ constructor(
 
   private fun responseCount(response: Response?): Int {
     var result = 1
-    while (response?.priorResponse != null) {
+    var priorResponse = response?.priorResponse
+    while (priorResponse != null) {
+      priorResponse = priorResponse.priorResponse
       result++
     }
     return result
